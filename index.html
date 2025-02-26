@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Deposit Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #4CAF50, #2E8B57);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .calculator {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            width: 350px;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        label, input {
+            display: block;
+            margin: 10px auto;
+            width: 80%;
+        }
+        input {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #FFD700;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #FFC107;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <main class="calculator">
+        <h1>Bank Deposit Calculator</h1>
+        <form id="calculator-form">
+            <label for="initial">Initial Amount ($):</label>
+            <input type="number" id="initial" name="initial" placeholder="Enter initial amount" required>
+            
+            <label for="interest">Interest Rate (%):</label>
+            <input type="number" id="interest" name="interest" step="0.01" placeholder="Enter interest rate" required>
+            
+            <label for="years">Number of Years:</label>
+            <input type="number" id="years" name="years" placeholder="Enter number of years" required>
+            
+            <div class="buttons">
+                <button type="submit">Calculate</button>
+                <button type="reset" id="reset-btn">Reset</button>
+            </div>
+        </form>
+        
+        <p class="result" id="result" aria-live="polite"></p>
+    </main>
+
+    <script>
+        document.getElementById("calculator-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            let initial = parseFloat(document.getElementById('initial').value);
+            let interest = parseFloat(document.getElementById('interest').value) / 100;
+            let years = parseInt(document.getElementById('years').value);
+
+            if (isNaN(initial) || isNaN(interest) || isNaN(years)) {
+                alert('Please enter valid numbers.');
+                return;
+            }
+
+            let result = Math.round(initial * (1 + interest) ** years);
+            document.getElementById('result').textContent = `Final Amount: $${result}`;
+        });
+
+        document.getElementById("reset-btn").addEventListener("click", function() {
+            document.getElementById("result").textContent = "";
+        });
+    </script>
+</body>
+</html>
